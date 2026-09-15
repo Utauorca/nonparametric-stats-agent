@@ -1,0 +1,8 @@
+# 兩家 LLM 都列出來；你只會用到 LLM_PROVIDER 指定的那家，另一家裝了也不影響。
+google-genai>=1.0.0
+anthropic>=0.69.0
+python-dotenv>=1.0.0
+numpy>=1.26
+pandas>=2.0
+scipy>=1.11
+rich>=13.0
