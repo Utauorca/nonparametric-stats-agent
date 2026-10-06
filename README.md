@@ -110,8 +110,29 @@ print(answer)        # 也會即時串流印出
   `data/` 底下的 CSV、用 `run_python` 實際以 scipy 計算、再用 `write_file` 存下報告。
   所有檔案存取都被限制在專案資料夾內；`run_python` 在你本機執行、有 60 秒逾時。
 
+## Claude Agent Skill（另一種用法）
+
+除了上面的獨立 Python agent，本 repo 也附了一份 **Claude Agent Skill**，位於
+`.claude/skills/nonparametric-stats/`。用 Claude Code / Claude 開啟本 repo 時會**自動載入**，
+讓 Claude 在你問無母數問題時依決策樹判斷方法、說明假設、並給效果量。
+
+```
+.claude/skills/nonparametric-stats/
+├── SKILL.md                      # 主檔：觸發條件(frontmatter) + 回答流程
+├── references/
+│   ├── decision-tree.md          # 方法選擇決策樹(mermaid 流程圖)
+│   ├── methods.md                # 各檢定速查
+│   └── textbook-methods.md       # 完整版：假設/公式/ties/判斷規則/R code
+└── scripts/
+    └── run_test.py               # 用 scipy 實算 Mann-Whitney / Wilcoxon / Kruskal
+```
+
+Skill 與 Python agent 共享同一套專業知識，只是掛載方式不同：Skill 掛在 Claude Code 上，
+Python agent 則是可獨立執行的程式。
+
 ## 延伸方向（選做）
 - ✅ ~~加 tool use 讓 agent 直接算檢定~~（已完成，見上表）
+- ✅ ~~做成 Claude Agent Skill~~（已完成，見上節）
 - 換成 **Streamlit** 網頁介面，支援上傳 CSV。
 - 加入 **RAG**：把無母數統計教科書或講義做成知識庫，讓回答有出處。
 
