@@ -24,11 +24,12 @@ class AgentError(RuntimeError):
     """對使用者友善的錯誤（額度、忙碌、金鑰、未安裝套件等）。cli 會顯示成一行提示。"""
 
 
-# 三個工具的分派表 —— 兩家後端共用同一組 tools.py 函式
+# 四個工具的分派表 —— 兩家後端共用同一組 tools.py 函式
 _TOOL_DISPATCH = {
     "read_file": tools.read_file,
     "write_file": tools.write_file,
     "run_python": tools.run_python,
+    "run_r": tools.run_r,
 }
 
 
@@ -57,7 +58,7 @@ class _GeminiBackend:
             model=self.model,
             config=types.GenerateContentConfig(
                 system_instruction=SYSTEM_PROMPT,
-                tools=[tools.read_file, tools.write_file, tools.run_python],
+                tools=[tools.read_file, tools.write_file, tools.run_python, tools.run_r],
             ),
         )
 
@@ -134,6 +135,20 @@ _CLAUDE_TOOLS = [
         "input_schema": {
             "type": "object",
             "properties": {"code": {"type": "string", "description": "要執行的 Python 原始碼"}},
+            "required": ["code"],
+        },
+    },
+    {
+        "name": "run_r",
+        "description": (
+            "在本機用 Rscript 執行 R 程式，用來實際計算統計量與 p 值。"
+            "使用者的報告以 R 撰寫，計算時優先用這個工具，函式與參數要和報告一致"
+            "（例如 binom.test、mcnemar.test、DescTools::RunsTest）。"
+            "工作目錄為專案根目錄；請用 print() 或 cat() 把結果印出來。"
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {"code": {"type": "string", "description": "要執行的 R 原始碼"}},
             "required": ["code"],
         },
     },
