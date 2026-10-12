@@ -1,0 +1,6 @@
+# Windows 批次檔必須使用 CRLF 換行，否則雙擊會因解析錯誤而「跑不起來」。
+# 不論使用者的 git 設定為何，checkout 時一律還原成 CRLF。
+*.bat text eol=crlf
+
+# 其餘文字檔交給 git 自動判斷換行。
+* text=auto

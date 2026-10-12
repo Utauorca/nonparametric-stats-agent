@@ -1,58 +1,58 @@
 @echo off
-REM ç„¡æ¯æ•¸çµ±è¨ˆ Agentï¼šä¸€éµå®‰è£ + å•Ÿå‹•ã€‚
-REM ç¬¬ä¸€æ¬¡é»žå…©ä¸‹æœƒè‡ªå‹•å»ºç«‹è™›æ“¬ç’°å¢ƒã€å®‰è£å¥—ä»¶ã€å»ºç«‹ .envï¼›ä¹‹å¾Œé»žå…©ä¸‹å³ç›´æŽ¥å•Ÿå‹•ã€‚
-chcp 65001 >nul
+REM µL¥À¼Æ²Î­p Agent¡G¤@Áä¦w¸Ë + ±Ò°Ê¡C
+REM ²Ä¤@¦¸ÂI¨â¤U·|¦Û°Ê«Ø¥ßµêÀÀÀô¹Ò¡B¦w¸Ë®M¥ó¡B«Ø¥ß .env¡F¤§«áÂI¨â¤U§Yª½±µ±Ò°Ê¡C
+chcp 950 >nul
 pushd "%~dp0"
 set PYTHONUTF8=1
 
-REM --- 1. å°‹æ‰¾ Python ---
+REM --- 1. ´M§ä Python ---
 set "PYCMD=python"
 where python >nul 2>nul
 if errorlevel 1 (
   set "PYCMD=py"
   where py >nul 2>nul
   if errorlevel 1 (
-    echo [éŒ¯èª¤] æ‰¾ä¸åˆ° Pythonï¼Œè«‹å…ˆå®‰è£ Python 3.10 ä»¥ä¸Šï¼š
+    echo [¿ù»~] §ä¤£¨ì Python¡A½Ð¥ý¦w¸Ë Python 3.10 ¥H¤W¡G
     echo        https://www.python.org/downloads/
-    echo        å®‰è£æ™‚è¨˜å¾—å‹¾é¸ "Add Python to PATH"ã€‚
+    echo        ¦w¸Ë®É°O±o¤Ä¿ï "Add Python to PATH"¡C
     pause
     popd
     exit /b 1
   )
 )
 
-REM --- 2. æ²’æœ‰è™›æ“¬ç’°å¢ƒå°±è‡ªå‹•å»ºç«‹ä¸¦å®‰è£å¥—ä»¶ï¼ˆåªåœ¨ç¬¬ä¸€æ¬¡ï¼‰ ---
+REM --- 2. ¨S¦³µêÀÀÀô¹Ò´N¦Û°Ê«Ø¥ß¨Ã¦w¸Ë®M¥ó¡]¥u¦b²Ä¤@¦¸¡^ ---
 if not exist ".venv\Scripts\python.exe" (
-  echo [è¨­å®š] ç¬¬ä¸€æ¬¡åŸ·è¡Œï¼šå»ºç«‹è™›æ“¬ç’°å¢ƒä¸­...
+  echo [³]©w] ²Ä¤@¦¸°õ¦æ¡G«Ø¥ßµêÀÀÀô¹Ò¤¤...
   %PYCMD% -m venv .venv
   if errorlevel 1 (
-    echo [éŒ¯èª¤] å»ºç«‹è™›æ“¬ç’°å¢ƒå¤±æ•—ã€‚
+    echo [¿ù»~] «Ø¥ßµêÀÀÀô¹Ò¥¢±Ñ¡C
     pause
     popd
     exit /b 1
   )
-  echo [è¨­å®š] å®‰è£å¥—ä»¶ä¸­ï¼ˆç¬¬ä¸€æ¬¡æœƒèŠ±å¹¾åˆ†é˜ï¼Œè«‹ç¨å€™ï¼‰...
+  echo [³]©w] ¦w¸Ë®M¥ó¤¤¡]²Ä¤@¦¸·|ªá´X¤ÀÄÁ¡A½Ðµy­Ô¡^...
   ".venv\Scripts\python.exe" -m pip install --upgrade pip >nul
   ".venv\Scripts\python.exe" -m pip install -r requirements.txt
   if errorlevel 1 (
-    echo [éŒ¯èª¤] å¥—ä»¶å®‰è£å¤±æ•—ï¼Œè«‹æª¢æŸ¥ç¶²è·¯é€£ç·šæˆ– requirements.txtã€‚
+    echo [¿ù»~] ®M¥ó¦w¸Ë¥¢±Ñ¡A½ÐÀË¬dºô¸ô³s½u©Î requirements.txt¡C
     pause
     popd
     exit /b 1
   )
-  echo [è¨­å®š] å¥—ä»¶å®‰è£å®Œæˆã€‚
+  echo [³]©w] ®M¥ó¦w¸Ë§¹¦¨¡C
 )
 
-REM --- 3. æ²’æœ‰ .env å°±å¾žç¯„æœ¬è¤‡è£½ï¼Œä¸¦è«‹ä½¿ç”¨è€…å¡«é‡‘é‘°å¾Œå†å•Ÿå‹• ---
+REM --- 3. ¨S¦³ .env ´N±q½d¥»½Æ»s¡A¨Ã½Ð¨Ï¥ÎªÌ¶ñª÷Æ_«á¦A±Ò°Ê ---
 if not exist ".env" (
   copy ".env.example" ".env" >nul
   echo.
-  echo [è¨­å®š] å·²ç‚ºä½ å»ºç«‹ .env æª”ã€‚è«‹åœ¨æ‰“é–‹çš„è¨˜äº‹æœ¬ä¸­é¸ä¸€å®¶ LLM ä¸¦å¡«å…¥é‡‘é‘°ï¼š
-  echo        - ç”¨ Geminiï¼šLLM_PROVIDER=geminiï¼Œå¡« GEMINI_API_KEY
-  echo          ï¼ˆå…è²»é¡åº¦ç”³è«‹ï¼šhttps://aistudio.google.com/apikeyï¼‰
-  echo        - ç”¨ Claudeï¼šLLM_PROVIDER=claudeï¼Œå¡« ANTHROPIC_API_KEY
+  echo [³]©w] ¤w¬°§A«Ø¥ß .env ÀÉ¡C½Ð¦b¥´¶}ªº°O¨Æ¥»¤¤¿ï¤@®a LLM ¨Ã¶ñ¤Jª÷Æ_¡G
+  echo        - ¥Î Gemini¡GLLM_PROVIDER=gemini¡A¶ñ GEMINI_API_KEY
+  echo          ^(§K¶OÃB«×¥Ó½Ð¡Ghttps://aistudio.google.com/apikey^)
+  echo        - ¥Î Claude¡GLLM_PROVIDER=claude¡A¶ñ ANTHROPIC_API_KEY
   echo.
-  echo        å¡«å¥½ã€å­˜æª”ã€é—œé–‰è¨˜äº‹æœ¬å¾Œï¼Œå†é»žå…©ä¸‹ run.bat å°±æœƒé–‹å§‹å°è©±ã€‚
+  echo        ¶ñ¦n¡B¦sÀÉ¡BÃö³¬°O¨Æ¥»«á¡A¦AÂI¨â¤U run.bat ´N·|¶}©l¹ï¸Ü¡C
   echo.
   pause
   notepad ".env"
@@ -60,7 +60,7 @@ if not exist ".env" (
   exit /b 0
 )
 
-REM --- 4. ä¸€åˆ‡å°±ç·’ï¼Œå•Ÿå‹• agent ---
+REM --- 4. ¤@¤Á´Nºü¡A±Ò°Ê agent ---
 ".venv\Scripts\python.exe" -m src.cli
 echo.
 pause >nul
