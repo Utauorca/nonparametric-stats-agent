@@ -130,6 +130,9 @@ print(answer)        # 也會即時串流印出
 Skill 與 Python agent 共享同一套專業知識，只是掛載方式不同：Skill 掛在 Claude Code 上，
 Python agent 則是可獨立執行的程式。
 
+📖 **Claude / Gemini 用戶各自怎麼用、以及想改專業知識該動哪個檔**，見
+[`docs/使用與維護指南.md`](docs/使用與維護指南.md)。
+
 ## 延伸方向（選做）
 - ✅ ~~加 tool use 讓 agent 直接算檢定~~（已完成，見上表）
 - ✅ ~~做成 Claude Agent Skill~~（已完成，見上節）
