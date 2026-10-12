@@ -16,36 +16,35 @@ git clone https://github.com/<你的帳號>/nonparametric-stats-agent.git
 cd nonparametric-stats-agent
 ```
 
-### 2. 建立虛擬環境並安裝套件
+### 2. 啟動（Windows 最簡單：一鍵安裝 + 啟動）
+
+對 **`run.bat` 點兩下**即可。第一次執行它會**自動**：
+1. 建立虛擬環境 `.venv` 並安裝 `requirements.txt` 的套件（會花幾分鐘）。
+2. 從 `.env.example` 複製出 `.env`，並開記事本請你填金鑰。
+3. 你填好金鑰、存檔後，**再點一次 `run.bat`** 就會開始對話。
+
+> ⚠️ **唯一需要你手動做的是填自己的 API 金鑰** —— 金鑰是你帳號的錢，不可能內建在 repo 裡。
+> 在 `.env` 用 `LLM_PROVIDER` 選一家，填對應金鑰（一把金鑰只能用它自己那家）：
+> - **用 Gemini**：`LLM_PROVIDER=gemini`，填 `GEMINI_API_KEY`
+>   （申請：<https://aistudio.google.com/apikey>，有免費額度）
+> - **用 Claude**：`LLM_PROVIDER=claude`，填 `ANTHROPIC_API_KEY`
+>   （申請：<https://console.anthropic.com/>）
+>
+> `.env` 已列入 `.gitignore`，**不會**被上傳到 GitHub。永遠不要把 key 寫進程式碼或 commit 出去。
+
+### 2b. 手動方式（macOS / Linux，或想自己掌控）
 ```bash
 python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# macOS / Linux:
-source .venv/bin/activate
-
+# Windows: .venv\Scripts\activate
+source .venv/bin/activate          # macOS / Linux
 pip install -r requirements.txt
-```
 
-### 3. 選一家 LLM 並填入金鑰
-```bash
-cp .env.example .env      # Windows 用 copy .env.example .env
-```
-打開 `.env`，用 `LLM_PROVIDER` 選一家，填對應的金鑰（**一把金鑰只能用它自己那家**）：
-
-- **用 Gemini**：`LLM_PROVIDER=gemini`，填 `GEMINI_API_KEY`
-  （申請：<https://aistudio.google.com/apikey>，有免費額度）
-- **用 Claude**：`LLM_PROVIDER=claude`，填 `ANTHROPIC_API_KEY`
-  （申請：<https://console.anthropic.com/>）
-> ⚠️ `.env` 已列入 `.gitignore`，**不會**被上傳到 GitHub。永遠不要把 key 寫進程式碼或 commit 出去。
-
-### 4. 開始對話
-Windows 最簡單：對 `run.bat` **點兩下**（會自動用 venv 啟動並修正中文編碼）。
-
-或用終端機：
-```bash
+cp .env.example .env               # Windows 用 copy .env.example .env
+# 編輯 .env 填入金鑰，然後：
 python -m src.cli
 ```
+
+### 3. 開始對話
 輸入問題即可，例如：
 > 我有兩組獨立樣本、每組 15 筆、資料不常態，想比較中位數差異，該用什麼檢定？
 
